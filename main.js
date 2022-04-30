@@ -8,135 +8,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-//// TODO: namespace
-
-// Every dt milliseconds, scroll the alphabet down a letter
-setInterval(scrollAlphabet, 750);
-
-// move the bottom row of the table to the top row to simulate scrolling
-function scrollAlphabet() {
-    $("#alphabet tr:nth-child(7)").insertBefore("#alphabet tr:nth-child(1)");
-}
-
-function typeLetter(col) {
-    letter = document.getElementById('alphabet').rows[5].cells[col].innerHTML;
-    if(letter === "~" && $("#message").text().length > 0) {
-        document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
-    } else if(letter === '_') {
-        document.getElementById('message').append(' ');
-    } else {
-        document.getElementById('message').append(letter);
-    }
-}
-
-
-/////////////////////////////////////////////
-/*
-* 4cm^2 canvas for drawing
-* From professor Xiang Chen's isketch example: https://github.com/ucla-hci/isketch.git
-*/
-/////////////////////////////////////////////
-
-var ISKETCH = ISKETCH || {}
-var WIDTH = 50;
-var HEIGHT = 50;
-
-$(document).ready(() => {
-    console.log('Welcome to iSketch!')
-
-    // initialize the canvas
-    $('#cvsMain')[0].width = WIDTH;
-    $('#cvsMain')[0].height = HEIGHT;
-    $('#cvsMain').css('background-color', '#eeeeee');
-    ISKETCH.context = $('#cvsMain')[0].getContext('2d');
-    ISKETCH.context.strokeStyle = "#df4b26";
-    ISKETCH.context.lineJoin = "round";
-    ISKETCH.context.lineWidth = 3;
-
-    ISKETCH.context.font = "12px Arial";
-    ISKETCH.drawSections();
-
-    // add input event handlers
-    $('#cvsMain').on('mousedown', ISKETCH.canvasMouseDown);
-    $('#cvsMain').on('mousemove', ISKETCH.canvasMouseMove);
-    $('#cvsMain').on('mouseup', ISKETCH.canvasMouseUp);
-})
-
-ISKETCH.drawSections = function(){
-    //divide canvas into 4 sections by drawing 2 lines
-    ISKETCH.context.strokeStyle = "#9C9C9C";
-    ISKETCH.context.lineWidth = 1;
-    ISKETCH.context.beginPath();
-    ISKETCH.context.moveTo(WIDTH/2,0);
-    ISKETCH.context.lineTo(WIDTH/2,HEIGHT);
-    ISKETCH.context.stroke();
-    ISKETCH.context.moveTo(0,HEIGHT/2);
-    ISKETCH.context.lineTo(WIDTH,HEIGHT/2);
-    ISKETCH.context.stroke();
-    ISKETCH.context.closePath();
-    ISKETCH.context.fillText("1", (WIDTH/4 - 4), (HEIGHT/4 + 4));
-    ISKETCH.context.fillText("2", (3*WIDTH/4 - 4), (HEIGHT/4 + 4));
-    ISKETCH.context.fillText("3", (WIDTH/4 - 4), (3*HEIGHT/4 + 4));
-    ISKETCH.context.fillText("4", (3*WIDTH/4 - 4), (3*HEIGHT/4 + 4));
-    ISKETCH.context.strokeStyle = "#df4b26";
-    ISKETCH.context.lineWidth = 5;
-}
-
-ISKETCH.canvasMouseDown = function (e) {
-    ISKETCH.context.clearRect(0, 0, $('#cvsMain').width(), $('#cvsMain').height());
-    ISKETCH.drawSections();
-    ISKETCH.context.beginPath();
-
-    let rect = $('#cvsMain')[0].getBoundingClientRect();
-    let x = e.clientX - rect.left, y = e.clientY - rect.top
-    ISKETCH.context.moveTo(x, y);
-    ISKETCH.context.stroke();
-
-    ISKETCH.isDragging = true;
-
-    // -------------------------------------------------------------------------------
-    // create an empty array to store the user's mouse coordinates
-    //
-    ISKETCH.coords = []
-    //
-    // TODO: add the mouse down coordinates to this array
-    // TIP: array.push(element)
-    //
-    let coord = {x: undefined, y: undefined}
-
-
-    // -------------------------------------------------------------------------------
-}
-
-ISKETCH.canvasMouseMove = function (e) {
-    if (!ISKETCH.isDragging) return;
-
-    let rect = $('#cvsMain')[0].getBoundingClientRect();
-    let x = e.clientX - rect.left, y = e.clientY - rect.top
-    ISKETCH.context.lineTo(x, y);
-    ISKETCH.context.moveTo(x, y);
-    ISKETCH.context.stroke();
-
-    // -------------------------------------------------------------------------------
-    // TODO: add the mouse move coordinates to the array
-
-
-
-    // -------------------------------------------------------------------------------
-}
-
-ISKETCH.canvasMouseUp = function (e) {
-    ISKETCH.isDragging = false;
-    ISKETCH.context.closePath();
-
-    // -------------------------------------------------------------------------------
-    // TODO: add the mouse up coordinates to the array
-
-    // TODO: print the array
-    
-    // -------------------------------------------------------------------------------
-}
-
 
 //////////////////////////////////////////////////////////////////////////////
 /**
@@ -222,9 +93,9 @@ function Result(name, score, ms) // constructor
 //
 // DollarRecognizer constants
 //
-const NumUnistrokes = 5;
+const NumUnistrokes = 5; //reduced from 16
 const NumPoints = 64;
-const SquareSize = 250.0;
+const SquareSize = 250.0; //TODO: should this change?
 const Origin = new Point(0,0);
 const Diagonal = Math.sqrt(SquareSize * SquareSize + SquareSize * SquareSize);
 const HalfDiagonal = 0.5 * Diagonal;
@@ -456,3 +327,134 @@ function Distance(p1, p2)
 	return Math.sqrt(dx * dx + dy * dy);
 }
 function Deg2Rad(d) { return (d * Math.PI / 180.0); }
+
+//////////////////////////////////////////////////////////////////////////////
+// TinyType functionality ////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+//// TODO: namespace
+
+// Every dt milliseconds, scroll the alphabet down a letter
+setInterval(scrollAlphabet, 750);
+
+// move the bottom row of the table to the top row to simulate scrolling
+function scrollAlphabet() {
+    $("#alphabet tr:nth-child(7)").insertBefore("#alphabet tr:nth-child(1)");
+}
+
+function typeLetter(col) {
+    letter = document.getElementById('alphabet').rows[5].cells[col].innerHTML;
+    if(letter === "~" && $("#message").text().length > 0) {
+        document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
+    } else if(letter === '_') {
+        document.getElementById('message').append(' ');
+    } else {
+        document.getElementById('message').append(letter);
+    }
+}
+
+
+/////////////////////////////////////////////
+//  4cm^2 canvas for drawing
+//  From professor Xiang Chen's isketch example: https://github.com/ucla-hci/isketch.git
+/////////////////////////////////////////////
+
+var ISKETCH = ISKETCH || {}
+var WIDTH = 50;
+var HEIGHT = 50;
+
+$(document).ready(() => {
+    console.log('Welcome to iSketch!')
+
+    // initialize the canvas
+    $('#cvsMain')[0].width = WIDTH;
+    $('#cvsMain')[0].height = HEIGHT;
+    $('#cvsMain').css('background-color', '#eeeeee');
+    ISKETCH.context = $('#cvsMain')[0].getContext('2d');
+    ISKETCH.context.strokeStyle = "#df4b26";
+    ISKETCH.context.lineJoin = "round";
+    ISKETCH.context.lineWidth = 3;
+
+    ISKETCH.context.font = "12px Arial";
+    ISKETCH.drawSections();
+
+    // add input event handlers
+    $('#cvsMain').on('mousedown', ISKETCH.canvasMouseDown);
+    $('#cvsMain').on('mousemove', ISKETCH.canvasMouseMove);
+    $('#cvsMain').on('mouseup', ISKETCH.canvasMouseUp);
+
+    //Initialize gesture recognizer
+    ISKETCH.recognizer = new DollarRecognizer();
+})
+
+ISKETCH.drawSections = function(){
+    //divide canvas into 4 sections by drawing 2 lines
+    ISKETCH.context.strokeStyle = "#9C9C9C";
+    ISKETCH.context.lineWidth = 1;
+    ISKETCH.context.beginPath();
+    ISKETCH.context.moveTo(WIDTH/2,0);
+    ISKETCH.context.lineTo(WIDTH/2,HEIGHT);
+    ISKETCH.context.stroke();
+    ISKETCH.context.moveTo(0,HEIGHT/2);
+    ISKETCH.context.lineTo(WIDTH,HEIGHT/2);
+    ISKETCH.context.stroke();
+    ISKETCH.context.closePath();
+    ISKETCH.context.fillText("1", (WIDTH/4 - 4), (HEIGHT/4 + 4));
+    ISKETCH.context.fillText("2", (3*WIDTH/4 - 4), (HEIGHT/4 + 4));
+    ISKETCH.context.fillText("3", (WIDTH/4 - 4), (3*HEIGHT/4 + 4));
+    ISKETCH.context.fillText("4", (3*WIDTH/4 - 4), (3*HEIGHT/4 + 4));
+    ISKETCH.context.strokeStyle = "#df4b26";
+    ISKETCH.context.lineWidth = 5;
+}
+
+ISKETCH.canvasMouseDown = function (e) {
+    ISKETCH.context.clearRect(0, 0, $('#cvsMain').width(), $('#cvsMain').height());
+    ISKETCH.drawSections();
+    ISKETCH.context.beginPath();
+
+    let rect = $('#cvsMain')[0].getBoundingClientRect();
+    let x = e.clientX - rect.left, y = e.clientY - rect.top;
+    ISKETCH.context.moveTo(x, y);
+    ISKETCH.context.stroke();
+
+    ISKETCH.isDragging = true;
+
+    // create an empty array to store the user's mouse coordinates as Point objects
+    // add the mouse down coordinates to this array
+    ISKETCH.coords = [];
+    ISKETCH.coords.push(new Point(x,y));
+}
+
+ISKETCH.canvasMouseMove = function (e) {
+    if (!ISKETCH.isDragging) return;
+
+    let rect = $('#cvsMain')[0].getBoundingClientRect();
+    let x = e.clientX - rect.left, y = e.clientY - rect.top
+    ISKETCH.context.lineTo(x, y);
+    ISKETCH.context.moveTo(x, y);
+    ISKETCH.context.stroke();
+
+    // Add the mouse move coordinates to the array
+    ISKETCH.coords.push(new Point(x,y));
+}
+
+ISKETCH.canvasMouseUp = function (e) {
+    ISKETCH.isDragging = false;
+    ISKETCH.context.closePath();
+
+    // Add the mouse up coordinates to the array
+    let rect = $('#cvsMain')[0].getBoundingClientRect();
+    let x = e.clientX - rect.left, y = e.clientY - rect.top;
+    ISKETCH.coords.push(new Point(x,y));
+
+    // Print the array
+    for(let i = 0; i < ISKETCH.coords.length; i++) {
+        console.log(ISKETCH.coords[i].X + ", " + ISKETCH.coords[i].Y);
+    }
+
+    // TODO: recognize the gesture
+    var gesture = ISKETCH.recognizer.Recognize(ISKETCH.coords, true);
+    //Write the gesture below the canvas
+    document.getElementById('gesture').innerHTML = gesture.Name;
+}
+

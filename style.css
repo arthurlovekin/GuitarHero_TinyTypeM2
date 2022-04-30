@@ -48,7 +48,12 @@ h1 {
 }
 
 #alphabet tr:nth-child(6n){
-    background-color: #cfcf96;
+    background-color: #f9e971;
+}
+
+#gesture {
+    font-size: 12px;
+    text-align: center;
 }
 
 button {
