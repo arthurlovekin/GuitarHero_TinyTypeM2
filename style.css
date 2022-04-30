@@ -1,48 +1,56 @@
 :root{
     --colWidth: 50px;
     --fullWidth: calc(var(--colWidth) * 4);
+}
 
-    }
+/* #cvsMain {
+    width: var(--colwidth)*2;
+    height: var(--colwidth)*2;
+    margin: 0px auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+} */
 
-    table {
-        margin: auto;
-    }
+table {
+    margin: auto;
+    text-align: center;
+}
 
-    td {
-        width: var(--colWidth);
-        /* border: 1px solid #ccc; */
-        text-align: center;
-        font-size: 1.5em;
-        font-family: monospace;
-        font-weight: bold;
-        /* color: #fff; */
-        /* background-color: #000; */
-        cursor: pointer;
-    }
+td {
+    width: var(--colWidth);
+    /* border: 1px solid #ccc; */
+    text-align: center;
+    font-size: 1.5em;
+    font-family: monospace;
+    font-weight: bold;
+    /* color: #fff; */
+    /* background-color: #000; */
+    cursor: pointer;
+}
 
-    .btn-group {
-        margin: auto;
-    }
+.btn-group {
+    margin: auto;
+}
 
-    #message {
-        background: ghostwhite; 
-        font-size: 14px; 
-        padding: 1px; 
-        border: 1px solid lightgray; 
-        border-radius: 5px;
-        margin: auto;
-        width: var(--fullWidth);
-        min-height: 25px;
-    }
-    h1 {
-        font-size: 24px;
-        text-align: center;
-    }
+#message {
+    background: ghostwhite; 
+    font-size: 14px; 
+    padding: 1px; 
+    border: 1px solid lightgray; 
+    border-radius: 5px;
+    margin: auto;
+    width: var(--fullWidth);
+    min-height: 25px;
+}
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
 
-    #alphabet tr:nth-child(6n){
-        background-color: #cfcf96;
-    }
+#alphabet tr:nth-child(6n){
+    background-color: #cfcf96;
+}
 
-    button {
-        width: var(--colWidth);
-    }
+button {
+    width: var(--colWidth);
+}

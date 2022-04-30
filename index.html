@@ -9,8 +9,9 @@
     <title>Guitar Hero TinyType</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- TinyType CSS (Not working for server??)-->
     <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="lib/jquery-ui.min.css" /> -->
+
   </head>
 
   <body>
@@ -19,6 +20,12 @@
     <!-- A table containing 4 columns and 7 rows to store the alphabet -->
     <!-- TODO: replace the table with lottery slot machine wheels like this: https://stackoverflow.com/questions/33157307/how-to-make-a-html5-spinning-list-rotating-wheel-selector-picker -->
     <table>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+      </tr>
       <tbody id="alphabet">
         <tr>
           <td>a</td>
@@ -72,7 +79,7 @@
 
     <!-- Four buttons on the bottom of the screen
     Occupying a total area under 256x256px (or under 2x2cm^2) --> 
-    <table>
+    <!-- <table>
       <tr>
         <td>
           <div class="btn-group btn-group-xs">
@@ -83,12 +90,29 @@
           </div>
         </td>
       </tr>
+    </table> -->
+
+    <table id="tbMain" border="0">
+      <tbody>
+        <tr id="trCanvas">
+          <td>
+            <canvas id="cvsMain"></canvas>
+          </td>
+        </tr>
+        <tr>
+          <td id="result">
+          </td>
+        </tr>
+      </tbody>
     </table>
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="guitarhero_tinytype.js"></script>
+    <!-- <script type="text/javascript" src="lib/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="lib/jquery-ui.min.js"></script> -->
+    <!-- <script type="text/javascript" src="lib/yaml.min.js"></script> -->
+    <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
