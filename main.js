@@ -452,9 +452,49 @@ ISKETCH.canvasMouseUp = function (e) {
         console.log(ISKETCH.coords[i].X + ", " + ISKETCH.coords[i].Y);
     }
 
-    // TODO: recognize the gesture
+    // Recognize the gesture
     var gesture = ISKETCH.recognizer.Recognize(ISKETCH.coords, true);
     //Write the gesture below the canvas
     document.getElementById('gesture').innerHTML = gesture.Name;
+
+    //TODO: Act based on the recognized gesture:
+    if(gesture.Name === "caret") {
+        //speed up the board
+    }
+    else if(gesture.Name === "v") {
+        //slow down the board
+    }
+    else if(gesture.Name === "circle") {
+        //switch between emojis and text
+    }
+    else if(gesture.Name === "x") {
+        //reset board speed
+    }
+    else if(gesture.Name === "line") {
+        //type space if forward, backspace if backward
+    }
+    else if(gesture.Name === "No match.") {
+        //If they drew a point input
+		if(ISKETCH.coords.length <= 8) {
+			//check the location of the first point and type corresponding letter
+			if(ISKETCH.coords[0].X < WIDTH/2 && ISKETCH.coords[0].Y < HEIGHT/2) {
+				//bottom right
+				typeLetter(0);
+			}
+			else if(ISKETCH.coords[0].X >= WIDTH/2 && ISKETCH.coords[0].Y < HEIGHT/2) {
+				//top left
+				typeLetter(1);
+			}
+			else if(ISKETCH.coords[0].X < WIDTH/2 && ISKETCH.coords[0].Y >= HEIGHT/2) {
+				//top right
+				typeLetter(2);
+			}
+			else if(ISKETCH.coords[0].X >= WIDTH/2 && ISKETCH.coords[0].Y >= HEIGHT/2) {
+				//bottom left
+				typeLetter(3);
+			}
+		}
+    }
+    //TODO: Add shortcuts for emojis
 }
 
