@@ -352,6 +352,7 @@ $(document).ready(() => {
 
     ISKETCH.context.font = "12px Arial";
     ISKETCH.drawSections();
+	show_table();
 
     // add input event handlers
     $('#cvsMain').on('mousedown', ISKETCH.canvasMouseDown);
@@ -441,6 +442,7 @@ ISKETCH.canvasMouseUp = function (e) {
     }
     else if(gesture.Name === "circle") {
         //switch between emojis and text
+		change_table();
     }
     else if(gesture.Name === "x") {
         //reset board speed
@@ -485,14 +487,30 @@ setInterval(scrollAlphabet, 750);
 
 // move the bottom row of the table to the top row to simulate scrolling
 function scrollAlphabet() {
-    $("#alphabet tr:nth-child(7)").insertBefore("#alphabet tr:nth-child(1)");
+    $("#TEXT-alphabet tr:nth-child(7)").insertBefore("#TEXT-alphabet tr:nth-child(1)");
+	$("#EMOJI-alphabet tr:nth-child(7)").insertBefore("#EMOJI-alphabet tr:nth-child(1)");
 }
 
 function typeLetter(col) {
-    letter = document.getElementById('alphabet').rows[5].cells[col].innerHTML;
-    if(letter === "~" && $("#message").text().length > 0) {
-        document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
-    } else if(letter === '_') {
+	if(VISIBLE === 1) {
+		letter = document.getElementById('TEXT-alphabet').rows[5].cells[col].innerHTML;
+	}
+	else {
+		letter = document.getElementById('EMOJI-alphabet').rows[5].cells[col].innerHTML;
+	}
+
+    if((letter === "~" || letter.codePointAt(0) === 128281) && $("#message").text().length > 0) {
+		//if previous letter is emoji need to backspace twice; if it is alphabetic then backpace once
+		prev_letter = $("#message").text().charAt($("#message").text().length-1);
+		var regexletters = /^[A-Za-z ]+$/;
+		if(prev_letter.match(regexletters)) {
+			document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
+		}
+		else {
+			document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -2);
+		}
+	}
+    else if(letter === '_') {
         document.getElementById('message').append(' ');
     } else {
         document.getElementById('message').append(letter);
@@ -506,17 +524,20 @@ function change_table() {
     } else {
       VISIBLE = 1;
     }
-    ISKETCH.show_table();
+    show_table();
 }
 
 function show_table() {
 	t1 = document.getElementById("TEXT-table");
 	t2 = document.getElementById("EMOJI-table");
-	if(VISIBLE == 1) {
+	if(VISIBLE === 1) {
 		t1.style.display = 'block';
+		//TODO: center table (I think the above messes up the og css)
+		// t1.style.margin = 'auto';
 		t2.style.display = 'none';
 	} else {
 		t2.style.display = 'block';
+		// t2.style.margin = 'auto';
 		t1.style.display = 'none';
 	}
 }

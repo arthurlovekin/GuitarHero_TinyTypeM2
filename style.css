@@ -16,6 +16,10 @@ table {
     text-align: center;
 }
 
+#EMOJI-table {
+    display: none; /*Initially hide the table*/
+}
+
 td {
     width: var(--colWidth);
     /* border: 1px solid #ccc; */
@@ -47,7 +51,11 @@ h1 {
     text-align: center;
 }
 
-#alphabet tr:nth-child(6n){
+#TEXT-alphabet tr:nth-child(6n){
+    background-color: #f9e971;
+}
+
+#EMOJI-alphabet tr:nth-child(6n){
     background-color: #f9e971;
 }
 
