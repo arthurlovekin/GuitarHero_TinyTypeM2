@@ -328,32 +328,6 @@ function Distance(p1, p2)
 }
 function Deg2Rad(d) { return (d * Math.PI / 180.0); }
 
-//////////////////////////////////////////////////////////////////////////////
-// TinyType functionality ////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-//// TODO: namespace
-
-// Every dt milliseconds, scroll the alphabet down a letter
-setInterval(scrollAlphabet, 750);
-
-// move the bottom row of the table to the top row to simulate scrolling
-function scrollAlphabet() {
-    $("#alphabet tr:nth-child(7)").insertBefore("#alphabet tr:nth-child(1)");
-}
-
-function typeLetter(col) {
-    letter = document.getElementById('alphabet').rows[5].cells[col].innerHTML;
-    if(letter === "~" && $("#message").text().length > 0) {
-        document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
-    } else if(letter === '_') {
-        document.getElementById('message').append(' ');
-    } else {
-        document.getElementById('message').append(letter);
-    }
-}
-
-
 /////////////////////////////////////////////
 //  4cm^2 canvas for drawing
 //  From professor Xiang Chen's isketch example: https://github.com/ucla-hci/isketch.git
@@ -362,6 +336,7 @@ function typeLetter(col) {
 var ISKETCH = ISKETCH || {}
 var WIDTH = 50;
 var HEIGHT = 50;
+var VISIBLE = 1; // determines which keyboard to display; 1=text, 2=emoji
 
 $(document).ready(() => {
     console.log('Welcome to iSketch!')
@@ -476,6 +451,7 @@ ISKETCH.canvasMouseUp = function (e) {
     else if(gesture.Name === "No match.") {
         //If they drew a point input
 		if(ISKETCH.coords.length <= 8) {
+			document.getElementById('gesture').innerHTML = "Point";
 			//check the location of the first point and type corresponding letter
 			if(ISKETCH.coords[0].X < WIDTH/2 && ISKETCH.coords[0].Y < HEIGHT/2) {
 				//bottom right
@@ -498,3 +474,49 @@ ISKETCH.canvasMouseUp = function (e) {
     //TODO: Add shortcuts for emojis
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// TinyType functionality ////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+var TINYTYPE = TINYTYPE || {} //TODO: Include namespace in functions below
+
+// Every dt milliseconds, scroll the alphabet down a letter
+setInterval(scrollAlphabet, 750);
+
+// move the bottom row of the table to the top row to simulate scrolling
+function scrollAlphabet() {
+    $("#alphabet tr:nth-child(7)").insertBefore("#alphabet tr:nth-child(1)");
+}
+
+function typeLetter(col) {
+    letter = document.getElementById('alphabet').rows[5].cells[col].innerHTML;
+    if(letter === "~" && $("#message").text().length > 0) {
+        document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -1);
+    } else if(letter === '_') {
+        document.getElementById('message').append(' ');
+    } else {
+        document.getElementById('message').append(letter);
+    }
+}
+
+//Function to allow toggling between emoji and text tables
+function change_table() {
+    if(VISIBLE === 1) {
+      VISIBLE = 2;
+    } else {
+      VISIBLE = 1;
+    }
+    ISKETCH.show_table();
+}
+
+function show_table() {
+	t1 = document.getElementById("TEXT-table");
+	t2 = document.getElementById("EMOJI-table");
+	if(VISIBLE == 1) {
+		t1.style.display = 'block';
+		t2.style.display = 'none';
+	} else {
+		t2.style.display = 'block';
+		t1.style.display = 'none';
+	}
+}
