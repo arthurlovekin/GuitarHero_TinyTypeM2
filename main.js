@@ -337,6 +337,7 @@ var ISKETCH = ISKETCH || {}
 var WIDTH = 50;
 var HEIGHT = 50;
 var VISIBLE = 1; // determines which keyboard to display; 1=text, 2=emoji
+var UPDATE_INTERVAL = 750; //ms
 
 $(document).ready(() => {
     console.log('Welcome to iSketch!')
@@ -436,9 +437,11 @@ ISKETCH.canvasMouseUp = function (e) {
     //TODO: Act based on the recognized gesture:
     if(gesture.Name === "caret") {
         //speed up the board
+		set_scroll_update_interval(UPDATE_INTERVAL-200);
     }
     else if(gesture.Name === "v") {
         //slow down the board
+		set_scroll_update_interval(UPDATE_INTERVAL+200);
     }
     else if(gesture.Name === "circle") {
         //switch between emojis and text
@@ -446,6 +449,7 @@ ISKETCH.canvasMouseUp = function (e) {
     }
     else if(gesture.Name === "x") {
         //reset board speed
+		set_scroll_update_interval(750);
     }
     else if(gesture.Name === "line") {
         //type space if forward, backspace if backward
@@ -483,7 +487,7 @@ ISKETCH.canvasMouseUp = function (e) {
 var TINYTYPE = TINYTYPE || {} //TODO: Include namespace in functions below
 
 // Every dt milliseconds, scroll the alphabet down a letter
-setInterval(scrollAlphabet, 750);
+TINYTYPE.updatetimer = setInterval(scrollAlphabet, UPDATE_INTERVAL);
 
 // move the bottom row of the table to the top row to simulate scrolling
 function scrollAlphabet() {
@@ -533,11 +537,19 @@ function show_table() {
 	if(VISIBLE === 1) {
 		t1.style.display = 'block';
 		//TODO: center table (I think the above messes up the og css)
-		// t1.style.margin = 'auto';
+		t1.style.margin = 'auto';
 		t2.style.display = 'none';
 	} else {
 		t2.style.display = 'block';
 		// t2.style.margin = 'auto';
 		t1.style.display = 'none';
+	}
+}
+
+function set_scroll_update_interval(ms) {
+	if(ms > 50 && ms < 4000) {
+		UPDATE_INTERVAL = ms;
+		clearInterval(TINYTYPE.updatetimer);
+		TINYTYPE.updatetimer = setInterval(scrollAlphabet, UPDATE_INTERVAL);
 	}
 }
