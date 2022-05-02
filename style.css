@@ -3,18 +3,10 @@
     --fullWidth: calc(var(--colWidth) * 4);
 }
 
-/* #cvsMain {
-    width: var(--colwidth)*2;
-    height: var(--colwidth)*2;
-    margin: 0px auto;
-    border-collapse: collapse;
-    border-spacing: 0;
-} */
-
 table {
     margin: auto;
     text-align: center;
-    /* display: block; */
+    width: var(--fullWidth);
 }
 
 #EMOJI-table {
@@ -28,8 +20,6 @@ td {
     font-size: 1.5em;
     font-family: monospace;
     font-weight: bold;
-    /* color: #fff; */
-    /* background-color: #000; */
     cursor: pointer;
 }
 
