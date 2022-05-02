@@ -8,8 +8,7 @@ Last updated: 04-11-2022 by Arthur Lovekin
 Method #1:
 Go into folder
 ```
-cd GuitarHero_TinyType
-
+cd GuitarHero_TinyTypeM2
 ```
 Start server using:
 ```
@@ -21,4 +20,4 @@ Method #2:
 Alternatively, you can use the "Go Live" extension for VS Code, or simply open the index.html file from your folder tree using a browser like edge or chrome. 
 
 Method #3:
-Go to ```https://guitarherotinytype.netlify.app```
+Go to ```https://guitarherotinytypem2.netlify.app/```
