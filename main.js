@@ -93,7 +93,7 @@ function Result(name, score, ms) // constructor
 //
 // DollarRecognizer constants
 //
-const NumUnistrokes = 5; //reduced from 16
+const NumUnistrokes = 7; //reduced from 16
 const NumPoints = 64;
 const SquareSize = 250.0; //TODO: should this change?
 const Origin = new Point(0,0);
@@ -115,15 +115,18 @@ function DollarRecognizer() // constructor
     //"caret" speed up
     //"v" slow down
     //"circle" switch between emoji and text
-    //"line" right=space, left=backspace
     //"point" select letter
 	this.Unistrokes = new Array(NumUnistrokes);
 	this.Unistrokes[0] = new Unistroke("x", new Array(new Point(87,142),new Point(89,145),new Point(91,148),new Point(93,151),new Point(96,155),new Point(98,157),new Point(100,160),new Point(102,162),new Point(106,167),new Point(108,169),new Point(110,171),new Point(115,177),new Point(119,183),new Point(123,189),new Point(127,193),new Point(129,196),new Point(133,200),new Point(137,206),new Point(140,209),new Point(143,212),new Point(146,215),new Point(151,220),new Point(153,222),new Point(155,223),new Point(157,225),new Point(158,223),new Point(157,218),new Point(155,211),new Point(154,208),new Point(152,200),new Point(150,189),new Point(148,179),new Point(147,170),new Point(147,158),new Point(147,148),new Point(147,141),new Point(147,136),new Point(144,135),new Point(142,137),new Point(140,139),new Point(135,145),new Point(131,152),new Point(124,163),new Point(116,177),new Point(108,191),new Point(100,206),new Point(94,217),new Point(91,222),new Point(89,225),new Point(87,226),new Point(87,224)));
 	this.Unistrokes[1] = new Unistroke("circle", new Array(new Point(127,141),new Point(124,140),new Point(120,139),new Point(118,139),new Point(116,139),new Point(111,140),new Point(109,141),new Point(104,144),new Point(100,147),new Point(96,152),new Point(93,157),new Point(90,163),new Point(87,169),new Point(85,175),new Point(83,181),new Point(82,190),new Point(82,195),new Point(83,200),new Point(84,205),new Point(88,213),new Point(91,216),new Point(96,219),new Point(103,222),new Point(108,224),new Point(111,224),new Point(120,224),new Point(133,223),new Point(142,222),new Point(152,218),new Point(160,214),new Point(167,210),new Point(173,204),new Point(178,198),new Point(179,196),new Point(182,188),new Point(182,177),new Point(178,167),new Point(170,150),new Point(163,138),new Point(152,130),new Point(143,129),new Point(140,131),new Point(129,136),new Point(126,139)));
 	this.Unistrokes[2] = new Unistroke("caret", new Array(new Point(79,245),new Point(79,242),new Point(79,239),new Point(80,237),new Point(80,234),new Point(81,232),new Point(82,230),new Point(84,224),new Point(86,220),new Point(86,218),new Point(87,216),new Point(88,213),new Point(90,207),new Point(91,202),new Point(92,200),new Point(93,194),new Point(94,192),new Point(96,189),new Point(97,186),new Point(100,179),new Point(102,173),new Point(105,165),new Point(107,160),new Point(109,158),new Point(112,151),new Point(115,144),new Point(117,139),new Point(119,136),new Point(119,134),new Point(120,132),new Point(121,129),new Point(122,127),new Point(124,125),new Point(126,124),new Point(129,125),new Point(131,127),new Point(132,130),new Point(136,139),new Point(141,154),new Point(145,166),new Point(151,182),new Point(156,193),new Point(157,196),new Point(161,209),new Point(162,211),new Point(167,223),new Point(169,229),new Point(170,231),new Point(173,237),new Point(176,242),new Point(177,244),new Point(179,250),new Point(181,255),new Point(182,257)));
 	this.Unistrokes[3] = new Unistroke("v", new Array(new Point(89,164),new Point(90,162),new Point(92,162),new Point(94,164),new Point(95,166),new Point(96,169),new Point(97,171),new Point(99,175),new Point(101,178),new Point(103,182),new Point(106,189),new Point(108,194),new Point(111,199),new Point(114,204),new Point(117,209),new Point(119,214),new Point(122,218),new Point(124,222),new Point(126,225),new Point(128,228),new Point(130,229),new Point(133,233),new Point(134,236),new Point(136,239),new Point(138,240),new Point(139,242),new Point(140,244),new Point(142,242),new Point(142,240),new Point(142,237),new Point(143,235),new Point(143,233),new Point(145,229),new Point(146,226),new Point(148,217),new Point(149,208),new Point(149,205),new Point(151,196),new Point(151,193),new Point(153,182),new Point(155,172),new Point(157,165),new Point(159,160),new Point(162,155),new Point(164,150),new Point(165,148),new Point(166,146)));
-	this.Unistrokes[4] = new Unistroke("line", new Array(new Point(50,130), new Point(250,130)));
-    //
+	this.Unistrokes[4] = new Unistroke("space", new Array(new Point(4,27), new Point(21,27),new Point(28,27),new Point(35,27),new Point(39,27), new Point(41,27), new Point(44,28), new Point(44,18), new Point(44,8)));
+	this.Unistrokes[5] = new Unistroke("backspace", new Array(new Point(4,4), new Point(4,10), new Point(4,18), new Point(5,25), new Point(6,27), new Point(21,27),new Point(28,27),new Point(35,27),new Point(39,27), new Point(44,27)));
+	this.Unistrokes[6] = new Unistroke("zigzag", new Array(new Point(307,216),new Point(333,186),new Point(356,215),new Point(375,186),new Point(399,216),new Point(418,186)));
+    // this.Unistrokes[7] = new Unistroke("frown", new Array(new Point(50,130), new Point(250,130)));
+	// this.Unistrokes[8] = new Unistroke("smile", new Array(new Point(50,130), new Point(250,130)));
+	//
 	// The $1 Gesture Recognizer API begins here -- 3 methods: Recognize(), AddGesture(), and DeleteUserGestures()
 	//
 	this.Recognize = function(points, useProtractor)
@@ -451,9 +454,18 @@ ISKETCH.canvasMouseUp = function (e) {
         //reset board speed
 		set_scroll_update_interval(750);
     }
-    else if(gesture.Name === "line") {
-        //type space if forward, backspace if backward
+    else if(gesture.Name === "space") {
+        //type space
+		document.getElementById('message').append(' ');
     }
+	else if(gesture.Name === "backspace") {
+		//type backspace
+		type_backspace();
+	}
+	else if(gesture.Name === "zigzag") {
+		//type zigzag
+		document.getElementById('message').innerHTML = document.getElementById('message').innerHTML + '&#128534';
+	}
     else if(gesture.Name === "No match.") {
         //If they drew a point input
 		if(ISKETCH.coords.length <= 8) {
@@ -496,6 +508,7 @@ function scrollAlphabet() {
 }
 
 function typeLetter(col) {
+	//get letter from table
 	if(VISIBLE === 1) {
 		letter = document.getElementById('TEXT-alphabet').rows[5].cells[col].innerHTML;
 	}
@@ -503,7 +516,19 @@ function typeLetter(col) {
 		letter = document.getElementById('EMOJI-alphabet').rows[5].cells[col].innerHTML;
 	}
 
-    if((letter === "~" || letter.codePointAt(0) === 128281) && $("#message").text().length > 0) {
+	//type letter
+    if((letter === "~" || letter.codePointAt(0) === 128281)) {
+		type_backspace();
+	}
+    else if(letter === '_') {
+        document.getElementById('message').append(' ');
+    } else {
+        document.getElementById('message').append(letter);
+    }
+}
+
+function type_backspace() {
+	if($("#message").text().length > 0) {
 		//if previous letter is emoji need to backspace twice; if it is alphabetic then backpace once
 		prev_letter = $("#message").text().charAt($("#message").text().length-1);
 		var regexletters = /^[A-Za-z ]+$/;
@@ -514,11 +539,6 @@ function typeLetter(col) {
 			document.getElementById('message').innerHTML = document.getElementById('message').innerHTML.slice(0, -2);
 		}
 	}
-    else if(letter === '_') {
-        document.getElementById('message').append(' ');
-    } else {
-        document.getElementById('message').append(letter);
-    }
 }
 
 //Function to allow toggling between emoji and text tables
